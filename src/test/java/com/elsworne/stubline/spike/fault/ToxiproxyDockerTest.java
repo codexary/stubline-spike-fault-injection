@@ -18,7 +18,9 @@ class ToxiproxyDockerTest {
   @Test
   void toxiproxyApiCreatesLatencyToxic() throws Exception {
     try (var proxy =
-            new ToxiproxyContainer(DockerImageName.parse("ghcr.io/shopify/toxiproxy:2.13.0"));
+            new ToxiproxyContainer(
+                DockerImageName.parse("ghcr.io/shopify/toxiproxy:2.13.0")
+                    .asCompatibleSubstituteFor("shopify/toxiproxy"));
         var http = HttpClient.newHttpClient()) {
       proxy.start();
       URI api = URI.create("http://" + proxy.getHost() + ":" + proxy.getMappedPort(8474));
